@@ -36,13 +36,13 @@ function AddNominee() {
       });
 
       
-
+      let tempAdd = localStorage.getItem('address')
     const obj =  {
         id:uuidv4(),
         name:"",
         relationship:"",
         dob:"",
-        permanantAddress:JSON.parse(localStorage.getItem('address')),
+        permanantAddress:(tempAdd) ? JSON.parse(tempAdd) : 'no address saved',
         currentAddress:"",
         pincode:"",
         city:"",
@@ -55,7 +55,7 @@ function AddNominee() {
    
 
     async function handleSubmit(e){  
-        
+        e.preventDefault();
         try{
             let user =await nomineeSchema.validate(objData);
         setData((prev)=>([...prev,user]));
@@ -104,7 +104,7 @@ function AddNominee() {
     return (
         <div className="add-container">
             <h1 className="add-title">Add Nominee</h1>
-            <form onSubmit={handleSubmit}>
+            <form >
                 <div className="form-container">
                     <div className="div-1">
                         <label>
@@ -169,7 +169,7 @@ function AddNominee() {
                     
 
                 </div>
-                <button className="btn green" type="submit">Add</button>
+                <button className="btn green" onClick={handleSubmit} type="submit">Add</button>
                 <button className="btn red"><Link className="link" to="/">Cancel</Link></button>
             </form>
         </div>
